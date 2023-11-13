@@ -60,7 +60,7 @@ def handle_userinput(user_question):
 def main():
     load_dotenv()
     #openai_key = os.getenv("OPENAI_API_KEY")
-    st.set_page_config(page_title="Chat with PDF docs", page_icon=":books:")
+    st.set_page_config(page_title="Chat with PDF docs", page_icon=":robot_face:")
 
     st.write(css, unsafe_allow_html=True)
 
@@ -70,7 +70,7 @@ def main():
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = None
 
-    st.header("Chat with PDF docs :books:")
+    st.header("Chat with PDF docs :book:")
     
     user_question = st.text_input("Ask a question about your documents:")
     if user_question:
