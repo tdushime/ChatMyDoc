@@ -13,15 +13,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-  - name: List contents of /ChatMyDock/ on EC2
-    uses: appleboy/ssh-action@master
-    with:
-      host: ${{ secrets.EC2_HOST }}
-      username: ${{ secrets.EC2_USERNAME }}
-      key: ${{ secrets.EC2_PRIVATE_KEY }}
-      port: ${{ secrets.EC2_PORT }}
-      script: |
-        ls -l /ChatMyDock/
+    - name: List contents of /ChatMyDock/ on EC2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_PRIVATE_KEY }}
+        port: ${{ secrets.EC2_PORT }}
+        script: |
+          ls -l /ChatMyDock/
 
 
     - name: Set up Docker
