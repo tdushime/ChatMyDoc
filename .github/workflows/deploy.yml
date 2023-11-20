@@ -21,7 +21,7 @@ jobs:
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         port: ${{ secrets.EC2_PORT }}
         script: |
-          find /ChatMyDoc
+          find -type f -name "requirements.txt"
 
 
     - name: Set up Docker
