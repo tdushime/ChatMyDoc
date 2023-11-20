@@ -23,7 +23,11 @@ jobs:
       run: docker save chatmydoc_image -o image.tar
 
     - name: Create target directory on EC2
-      run: ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_PRIVATE_KEY }} ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} -p ${{ secrets.EC2_PORT }} "mkdir -p /ChatMyDock"
+      run: |
+        echo "${{ secrets.EC2_PRIVATE_KEY }}" > /tmp/ec2_private_key
+        chmod 600 /tmp/ec2_private_key
+        ssh -o StrictHostKeyChecking=no -i /tmp/ec2_private_key ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} -p ${{ secrets.EC2_PORT }} "mkdir -p /ChatMyDock"
+      shell: bash
 
     - name: Secure copy image to EC2
       uses: appleboy/scp-action@master
