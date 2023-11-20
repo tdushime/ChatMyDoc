@@ -1,4 +1,4 @@
-#import os
+import os
 import streamlit as st
 from dotenv import load_dotenv
 from PyPDF2 import PdfReader
@@ -59,7 +59,7 @@ def handle_userinput(user_question):
 
 def main():
     load_dotenv()
-    #openai_key = os.getenv("OPENAI_API_KEY")
+    openai_key = os.getenv("OPENAI_API_KEY")
     st.set_page_config(page_title="Chat with PDF docs", page_icon=":robot_face:")
 
     st.write(css, unsafe_allow_html=True)

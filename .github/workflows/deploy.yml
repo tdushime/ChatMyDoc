@@ -1,0 +1,46 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker
+      uses: actions/setup-docker@v2
+
+    - name: Build Docker image
+      run: docker build -t your-image-name .
+
+    - name: Export Docker image as tar
+      run: docker save your-image-name -o image.tar
+
+    - name: Secure copy image to EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_PRIVATE_KEY }}
+        port: ${{ secrets.EC2_PORT }}
+        source: image.tar
+        target: /path/on/ec2/image.tar
+
+    - name: SSH into EC2 and load Docker image
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_PRIVATE_KEY }}
+        port: ${{ secrets.EC2_PORT }}
+        script: |
+          docker load -i ChatMyDock/image.tar
+          docker stop chatmydoc_container || true
+          docker rm chatmydoc_container || true
+          docker run -d --name chatmydoc_container -p 8501:8501 chatmydoc_image
