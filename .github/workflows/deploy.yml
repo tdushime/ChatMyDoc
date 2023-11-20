@@ -13,15 +13,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: List contents of ChatMyDoc on EC2
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.EC2_PRIVATE_KEY }}
-        port: ${{ secrets.EC2_PORT }}
-        script: |
-          find -type f -name "requirements.txt"
+    # - name: List contents of ChatMyDoc on EC2
+    #   uses: appleboy/ssh-action@master
+    #   with:
+    #     host: ${{ secrets.EC2_HOST }}
+    #     username: ${{ secrets.EC2_USERNAME }}
+    #     key: ${{ secrets.EC2_PRIVATE_KEY }}
+    #     port: ${{ secrets.EC2_PORT }}
+    #     script: |
+    #       find -type f -name "requirements.txt"
 
 
     - name: Set up Docker
@@ -48,7 +48,7 @@ jobs:
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         port: ${{ secrets.EC2_PORT }}
         source: "image.tar"
-        target: "/ChatMyDock/image.tar"
+        target: "./ChatMyDock/image.tar"
 
     - name: SSH into EC2 and load Docker image
       uses: appleboy/ssh-action@master
@@ -58,7 +58,7 @@ jobs:
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         port: ${{ secrets.EC2_PORT }}
         script: |
-          docker load -i /ChatMyDock/image.tar
+          docker load -i ./ChatMyDock/image.tar
           docker stop chatmydoc_container || true
           docker rm chatmydoc_container || true
           docker run -d --name chatmydoc_container -p 8501:8501 chatmydoc_image
