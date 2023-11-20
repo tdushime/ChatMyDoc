@@ -30,7 +30,7 @@ jobs:
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         port: ${{ secrets.EC2_PORT }}
         source: image.tar
-        target: /ChatMyDock/image.tar
+        target: /home/ChatMyDock/image.tar
 
     - name: SSH into EC2 and load Docker image
       uses: appleboy/ssh-action@master
