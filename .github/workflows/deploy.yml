@@ -47,7 +47,7 @@ jobs:
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         port: ${{ secrets.EC2_PORT }}
         script: |
-          sudo docker load -i /github/workspace/ChatMyDock/image.tar
+          sudo docker load -i /github/workspace/image.tar
           sudo docker stop chatmydoc_container || true
           sudo docker rm chatmydoc_container || true
           sudo docker run -d --name chatmydoc_container -p 8501:8501 your-image-name
