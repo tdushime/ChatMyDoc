@@ -24,7 +24,7 @@ jobs:
       with:
         context: .
         push: false
-        tags: your-image-name
+        tags: chatmydoc_image
 
     - name: Export Docker image as tar
       run: docker save your-image-name -o image.tar
