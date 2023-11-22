@@ -5,13 +5,14 @@ on:
     branches:
       - main
 
+env: 
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY}}
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set OpenAI API Key
-      run: echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
     - name: Add runner to docker group
       run: sudo usermod -aG docker $USER
 
