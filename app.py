@@ -35,7 +35,7 @@ def get_vectorstore(chunks):
     return vectorstore
 
 def get_conversation_chain(vectorstore):
-    llm = ChatOpenAI(api_key=openai_key)
+    llm = ChatOpenAI()
 
     memory = ConversationBufferMemory(
         memory_key='chat_history',
@@ -59,7 +59,7 @@ def handle_userinput(user_question):
 
 def main():
     load_dotenv()
-    openai_key = os.getenv("OPENAI_API_KEY")
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
     st.set_page_config(page_title="Chat with PDF docs", page_icon=":robot_face:")
 
     st.write(css, unsafe_allow_html=True)
