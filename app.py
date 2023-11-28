@@ -30,7 +30,7 @@ def get_text_chunks(text):
     return chunks
 
 def get_vectorstore(chunks):
-    embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings(openai_api_key=os.getenv('OPENAI_API_KEY'))
     vectorstore = FAISS.from_texts(texts=chunks, embedding=embeddings)
     return vectorstore
 
@@ -58,7 +58,7 @@ def handle_userinput(user_question):
             st.write(bot_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
 
 def main():
-    load_dotenv()
+    #load_dotenv()
     #OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
     st.set_page_config(page_title="Chat with PDF docs", page_icon=":robot_face:")
 
