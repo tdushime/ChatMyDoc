@@ -29,13 +29,14 @@ def get_text_chunks(text):
     chunks = text_splitter.split_text(text)
     return chunks
 
+OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
 def get_vectorstore(chunks):
-    embeddings = OpenAIEmbeddings(openai_api_key=os.getenv('OPENAI_API_KEY'))
+    embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
     vectorstore = FAISS.from_texts(texts=chunks, embedding=embeddings)
     return vectorstore
 
 def get_conversation_chain(vectorstore):
-    llm = ChatOpenAI(temperature=0.7, openai_api_key=os.getenv('OPENAI_API_KEY'))
+    llm = ChatOpenAI(temperature=0.7, openai_api_key=OPENAI_API_KEY)
 
     memory = ConversationBufferMemory(
         memory_key='chat_history',
